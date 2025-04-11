@@ -27,3 +27,42 @@ document.addEventListener("keypress", function () {
   }
 });
 
+// Function to flash the game button
+function gameFlash(btn) {
+    btn.classList.add("flash");   // Add flash class to the button
+    setTimeout(function () {
+        btn.classList.remove("flash");  // Remove flash class after 100ms
+    }, 100);
+}
+
+// Function to flash the user button when pressed
+function userFlash(btn) {
+    btn.classList.add("userflash");  // Add userflash class to the button
+    setTimeout(function () {
+        btn.classList.remove("userflash");  // Remove userflash class after 100ms
+    }, 100);
+}
+
+
+// Function to handle level progression
+function levelUp() {
+    userSeq = []; // Reset user sequence for the new level
+    level++;  // Increment the level
+    h2.innerText = `level ${level}`; // Update the level display
+    scoreDisplay.innerText = `score: ${level}`; // update the score display
+
+
+    //check if the current level is a new high score 
+    if (level > highScore) {
+        highScore = level; // update high score
+        scoreDisplay.innerText += ` (New High Score)`; // indicate a new high score
+    }
+
+    // Randomly select a button color for the game sequence
+    let randIdx = Math.floor(Math.random() * 4);  // Generate a random index
+    let randColor = btns[randIdx];  // Get the corresponding color
+    let randBtn = document.querySelector(`.${randColor}`); // select the button element
+    gameSeq.push(randColor); // Add the selected color to the game sequence
+    console.log(gameSeq); // Log the game sequence for debugging
+    gameFlash(randBtn); // Flash the selected button
+}
