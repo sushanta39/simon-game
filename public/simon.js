@@ -66,3 +66,53 @@ function levelUp() {
     console.log(gameSeq); // Log the game sequence for debugging
     gameFlash(randBtn); // Flash the selected button
 }
+
+// Function to check the user's answer
+function checkAns(idx) {
+    // Check if the user's input matches the game sequence
+    if (userSeq[idx] === gameSeq[idx]) {
+        // If the user has completed the sequence
+        if(userSeq.length == gameSeq.length) {
+            setTimeout(levelUp, 1000); // Move to the next level after a delay
+        }
+    } else {
+        // If the user's input is incorrect, display game over message
+        h2.innerHTML = `Game Over! Your score was <b>${level}</b> <br> Press any key to start`;
+        document.querySelector("body").style.backgroundColor = "red"; // Change background color to red
+        setTimeout(function() {
+            document.querySelector("body").style.backgroundColor = "white"; // Reset background color after 150ms
+        }, 150);
+        reset(); // Reset the game
+    }
+}
+
+
+// Function to handle button press
+function btnPress() {
+    let btn = this; // Reference to the button that was pressed
+    userFlash(btn); // Flash the button to indicate it was pressed
+
+    userColor = btn.getAttribute("id"); // Get the color associated with the button
+    userSeq.push(userColor); // Add the pressed color to the user's sequence
+
+    checkAns(userSeq.length - 1); // Check the answer for the last pressed button
+}
+
+// Attach event listeners to all buttons for click events
+let allBtns = document.querySelectorAll(".btn");
+for (btn of allBtns) {
+    btn.addEventListener("click", btnPress); // Add click event listener to each button
+}
+
+// Function to reset the game state
+function reset() {
+    started = false; // Set game state to not started
+    gameSeq = []; // Clear the game sequence
+    userSeq = []; // Clear the user sequence
+    level = 0;
+    scoreDisplay.innerText = " "; // clear the score display on reset 
+}
+
+
+
+
