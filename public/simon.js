@@ -26,3 +26,4 @@ document.addEventListener("keypress", function () {
     levelUp(); // Call levelUp to start the first level
   }
 });
+
